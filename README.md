@@ -78,8 +78,8 @@ Access
 <http://localhost:3000/>   
 You will reactjs code local api is consumed.   
 
->   Port Specifications:
->   81 - PHP
->   5000 - Nodejs
->   3000 - Reactjs
->   3306 - Mysql
+>   Port Specifications:   
+>   81 - PHP   
+>   5000 - Nodejs   
+>   3000 - Reactjs   
+>   3306 - Mysql   
