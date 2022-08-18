@@ -54,8 +54,8 @@ Place your php files. You can install laravel here if you want to.
 You can place adminer file to open mysql admin.
 ```
 Access
-<http://localhost:81/api.php>
-<http://localhost:81/test.php>
+<http://localhost:81/api.php>   
+<http://localhost:81/test.php>   
 
 
 ##### NODE.js
