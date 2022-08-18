@@ -53,7 +53,7 @@ app/public/public
 Place your php files. You can install laravel here if you want to.
 You can place adminer file to open mysql admin.
 ```
-Access
+Access   
 <http://localhost:81/api.php>   
 <http://localhost:81/test.php>   
 
@@ -64,7 +64,7 @@ appnode/
 All node js modules and files
 ```
 
-Access
+Access   
 <http://localhost:5000/api>
 <http://localhost:5000/>
 
@@ -74,6 +74,6 @@ appreact/
 Place your reactjs  files here
 ```
 
-Access
-<http://localhost:3000/>
+Access   
+<http://localhost:3000/>   
 You will reactjs code local api is consumed.
