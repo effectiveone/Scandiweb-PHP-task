@@ -11,7 +11,7 @@ This repository contains a web application developed using PHP, MySQL, Reactjs, 
 
 Check out the demo video to get a quick overview of the project:
 
-[![Watch the Demo](https://example.com/demo_thumbnail.png)](Assets/show.mp4)
+[![Watch the Demo](Assets/screen.png)](Assets/show.mp4)
 
 _Note: Click on the image to watch the demo._
 
