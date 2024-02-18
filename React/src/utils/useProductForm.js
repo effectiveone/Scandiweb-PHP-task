@@ -10,6 +10,7 @@ function useProductForm() {
   const [selectedType, setSelectedType] = useState({});
   const [selectedTypeProperties, setSelectedTypeProperties] = useState([]);
   const [properties, setProperties] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     const fetchProductTypes = async () => {
@@ -23,8 +24,6 @@ function useProductForm() {
 
     fetchProductTypes();
   }, []);
-
-  console.log('productTypes', productTypes);
 
   const handleTypeChange = async (typeId) => {
     const selectedProductType = productTypes.find(
@@ -51,9 +50,20 @@ function useProductForm() {
 
     try {
       await apiHandler.post('/products', JSON.stringify(productData));
+      console.log(JSON.stringify(productData));
       return navigate('/');
     } catch (error) {
       console.error(error);
+
+      // Sprawdź, czy błąd jest wynikiem walidacji na serwerze
+      if (error?.response?.status === 400) {
+        // Jeśli tak, to wyświetl błędy walidacji
+        const validationErrors = error?.response?.data?.message;
+        toast.error(validationErrors);
+      } else {
+        // W przeciwnym razie wyświetl ogólny komunikat błędu
+        toast.error('An error occurred while processing your request.');
+      }
     }
   };
   return {
