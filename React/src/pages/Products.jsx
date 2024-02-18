@@ -1,49 +1,22 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { HeaderComponent, SingleProduct } from '../components';
-import { fetchProducts, deleteProducts } from '../app/productsSlice';
+import { useProductLogic } from '../utils/useProduct';
 
 function Products() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const products = useSelector((state) => state.products.products);
-  const isLoading = useSelector((state) => state.products.isLoading);
-  const isError = useSelector((state) => state.products.isError);
-  const [checkedProducts, setCheckedProducts] = useState([]);
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
-  const handleCheckboxChange = (productId) => {
-    setCheckedProducts((prevIds) => {
-      if (prevIds.includes(productId)) {
-        return prevIds.filter((id) => id !== productId);
-      } else {
-        return [...prevIds, productId];
-      }
-    });
-  };
-
-  const handleDelete = () => {
-    console.log('checkedProducts', checkedProducts);
-    dispatch(deleteProducts(checkedProducts))
-      .then(() => {
-        setCheckedProducts([]);
-        dispatch(fetchProducts());
-        alert('uzyte');
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message);
-      });
-  };
+  const {
+    products,
+    isLoading,
+    isError,
+    checkedProducts,
+    handleCheckboxChange,
+    handleDelete,
+  } = useProductLogic();
 
   if (isError) {
     return <main>Could not retrieve the products at the moment!</main>;
   }
+
   return (
     <main className="products">
       <HeaderComponent
