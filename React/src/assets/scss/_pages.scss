@@ -22,8 +22,25 @@
 .products {
   &__product-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
+
+    @include breakpoint-up('small') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include breakpoint-up('medium') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    // Dla ekranów o szerokości większej lub równej "large"
+    @include breakpoint-up('large') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    // Dla ekranów o szerokości większej lub równej "xlarge"
+    @include breakpoint-up('xlarge') {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   .single-product {

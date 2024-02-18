@@ -13,19 +13,25 @@ class Database
 
     public function __construct()
     {
-        try {
-            $this->config = require(__DIR__ . '/../config.php');
-            $dsn = "mysql:host={$this->config['database']['host']};dbname={$this->config['database']['dbname']}";
+        $this->loadConfig();
+        $this->connectToDatabase();
+    }
 
-            $this->connection = new PDO(
-                $dsn,
-                $this->config['database']['user'],
-                $this->config['database']['password'],
-                [
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                ]
-            );
+    private function loadConfig()
+    {
+        $configPath = __DIR__ . '/../config.php';
+        $this->config = require($configPath);
+    }
+
+    private function connectToDatabase()
+    {
+        try {
+            $dsn = "mysql:host={$this->config['database']['host']};dbname={$this->config['database']['dbname']}";
+            $options = [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            ];
+            $this->connection = new PDO($dsn, $this->config['database']['user'], $this->config['database']['password'], $options);
         } catch (PDOException $e) {
             $this->handleError('Database connection error', $e->getMessage());
         }
@@ -39,15 +45,25 @@ class Database
     public function query($query, $params = [])
     {
         try {
-            $this->statement = $this->connection->prepare($query);
-            if (is_array($params) && !empty($params)) {
-                $this->statement->execute($params);
-            } else {
-                $this->statement->execute();
-            }
+            $this->prepareStatement($query);
+            $this->executeStatement($params);
             return $this;
         } catch (PDOException $e) {
             $this->handleError('Database query error', $e->getMessage());
+        }
+    }
+
+    private function prepareStatement($query)
+    {
+        $this->statement = $this->connection->prepare($query);
+    }
+
+    private function executeStatement($params)
+    {
+        if (is_array($params) && !empty($params)) {
+            $this->statement->execute($params);
+        } else {
+            $this->statement->execute();
         }
     }
 
@@ -92,6 +108,19 @@ class Database
             'message' => $errorMessage,
         ];
 
+        $this->handleDuplicateEntryError($errorDetails, $response);
+        $this->handleIncorrectValueError($errorDetails, $response);
+
+        if ($this->config['app']['env'] !== 'production') {
+            $response['details'] = $errorDetails;
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    private function handleDuplicateEntryError($errorDetails, &$response)
+    {
         if (preg_match("/Duplicate entry '(.*?)' for key '(.*?)'/", $errorDetails, $matches)) {
             $value = $matches[1];
             $fieldName = strtoupper(preg_replace('/^[^.]+\\./', '', $matches[2]));
@@ -101,18 +130,16 @@ class Database
             } else {
                 $response['message'] = 'Duplicate value for a field.';
             }
-        } elseif (preg_match("/Incorrect (.*?) value: '(.*?)' for column '(.*?)'/", $errorDetails, $matches)) {
+        }
+    }
+
+    private function handleIncorrectValueError($errorDetails, &$response)
+    {
+        if (preg_match("/Incorrect (.*?) value: '(.*?)' for column '(.*?)'/", $errorDetails, $matches)) {
             $value = $matches[2];
             $fieldName = strtoupper($matches[3]);
 
             $response['message'] = "Incorrect value '$value' for field $fieldName";
         }
-
-        if ($this->config['app']['env'] !== 'production') {
-            $response['details'] = $errorDetails;
-        }
-
-        echo json_encode($response);
-        exit;
     }
 }
