@@ -1,0 +1,35 @@
+.form-row {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  label {
+    text-transform: capitalize;
+    min-width: 9rem;
+  }
+
+  input,
+  select {
+    background-color: transparent;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid $gray;
+    font-family: inherit;
+    outline: none;
+    transition: background-color 350ms ease;
+    min-width: 12rem;
+
+    &:focus {
+      background-color: $white;
+    }
+  }
+
+  .input-required {
+    color: $secondary;
+  }
+
+  p {
+    margin-top: 0.25rem;
+    font-size: 95%;
+  }
+}

@@ -1,65 +1,75 @@
-version: '3'
+version: '3.9'
+
 services:
-    web:
-        image: nginx:1.19
-        ports:
-            - "81:80"
-        volumes:
-            - ./nginx.conf:/etc/nginx/conf.d/default.conf
-            - ./app:/app
-        container_name: pompy_v2_web
-        networks:
-          - pompy-network
-    php:
-        build:
-            context: .
-            dockerfile: PHP.DOCKERFILE
-        volumes:
-            - ./app:/app
-        container_name: pompy_v2_php
-        networks:
-          - pompy-network
-    node:
-        build:
-            context: .
-            dockerfile: NODE.DOCKERFILE
-        volumes:
-            - ./appnode:/appnode
-            -  /appnode/node_modules
-        ports: 
-          - 5000:5000
-        networks:
-          - pompy-network    
-    frontend:
-        build:
-            context: .
-            dockerfile: FRONT.DOCKERFILE
-        environment:
-            WATCHPACK_POLLING : "true"
-        container_name: pompy_v2_react
-        ports:
-            - 3000:3000          
-        volumes:
-            - ./appreact:/appreact
-            - /appreact/node_modules
-        networks:
-          - pompy-network
-    mysql:
-        image: mariadb:10.7.3
-        environment:
-            MYSQL_ROOT_PASSWORD: 'admin'
-            MYSQL_USER: 'admin'
-            MYSQL_PASSWORD: 'admin'
-            MYSQL_DATABASE: 'mydb'
-        volumes:
-            - mysqldata:/var/lib/mysql
-        ports:
-            - 3306:3306
-        container_name: pompy_v2_mysql
-        networks:
-          - pompy-network
-networks: 
-    pompy-network:
-      driver: bridge
+  nginx:
+    image: nginx:1.19
+    ports:
+      - '81:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./PHP:/PHP
+    container_name: scandi_v2_web
+    networks:
+      - scandi-network
+
+  php:
+    build:
+      context: .
+      dockerfile: PHP.DOCKERFILE
+    environment:
+      APP_ENV: 'development'
+      DB_HOST: 'mysql'
+      DB_PORT: '3306'
+      DB_NAME: 'mydb'
+      DB_USER: 'admin'
+      DB_PASSWORD: 'admin'
+    volumes:
+      - ./PHP:/PHP
+    container_name: scandi_v2_php
+    networks:
+      - scandi-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: REACT.DOCKERFILE
+    environment:
+      WATCHPACK_POLLING: 'true'
+    container_name: scandi_v2_react
+    ports:
+      - 3000:3000
+    volumes:
+      - ./React:/React
+      - /React/node_modules
+    networks:
+      - scandi-network
+
+  mysql:
+    image: mariadb:10.7.3
+    environment:
+      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'admin'
+      MYSQL_DATABASE: 'mydb'
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 3306:3306
+    container_name: scandi_v2_mysql
+    networks:
+      - scandi-network
+
+  php-fpm:
+    image: php:8.1-fpm
+    volumes:
+      - ./PHP:/PHP
+    networks:
+      - scandi-network
+
+networks:
+  scandi-network:
+    driver: bridge
+
 volumes:
-    mysqldata: {}
+  mysqldata: {}

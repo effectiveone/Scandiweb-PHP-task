@@ -1,0 +1,37 @@
+$primary: hsl(135, 21%, 42%);
+$secondary: hsl(18, 80%, 45%);
+$gray: hsl(186, 9%, 52%);
+$font-color: hsl(129, 21%, 29%);
+$light-gray: hsl(71, 27%, 88%);
+$white: hsl(0, 0%, 100%);
+
+$main-font: 'Rubik', sans-serif;
+$font-sm: 0.875rem;
+$font-md: 1.125rem;
+$font-lg: 1.25rem;
+$font-xl: 3.25rem;
+
+$breakpoints-up: (
+  'small': '30em',
+  'medium': '48em',
+  'large': '72em',
+  'xlarge': '90em',
+);
+
+$breakpoints-down: (
+  'small': '29.9375em',
+  'medium': '47.9375em',
+  'large': '71.9375em',
+);
+
+@mixin breakpoint-up($size) {
+  @media (min-width: map-get($breakpoints-up, $size)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($size) {
+  @media (max-width: map-get($breakpoints-down, $size)) {
+    @content;
+  }
+}

@@ -1,0 +1,86 @@
+.add-product {
+  .product-type-container {
+    margin-bottom: 1rem;
+  }
+}
+
+.not-found,
+.throw-error {
+  text-align: center;
+  padding: 1rem;
+
+  img {
+    height: 25rem;
+  }
+
+  h2,
+  h3 {
+    margin: 1rem 0;
+  }
+}
+
+.products {
+  &__product-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .single-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    background-color: #f8f8f8;
+    text-align: center;
+    position: relative;
+
+    &__description {
+      margin-top: 0.25rem;
+      color: $gray;
+    }
+
+    /* Przenieś te style do środka .single-product */
+    &__checkbox-container {
+      position: absolute;
+      align-items: center;
+      width: 50px;
+      margin-bottom: 0.5rem;
+      margin-top: 0.5rem;
+
+      top: 0;
+      left: 0;
+
+      label {
+        cursor: pointer;
+        text-transform: lowercase;
+        border: 1px solid $gray;
+        min-width: unset;
+        line-height: 1;
+        padding: 0 0.25rem;
+        transition: all 350ms ease;
+      }
+
+      input:checked + label {
+        position: relative;
+        top: 0;
+        margin-bottom: 0.5rem;
+
+        background-color: $secondary;
+        border-color: $secondary;
+        color: $white;
+      }
+    }
+  }
+}
+
+.Toastify .Toastify__toast--error {
+  .Toastify__toast-icon svg {
+    fill: $secondary;
+  }
+
+  .Toastify__progress-bar {
+    background-color: $secondary;
+  }
+}

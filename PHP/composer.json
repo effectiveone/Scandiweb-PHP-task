@@ -1,0 +1,17 @@
+{
+  "name": "effectiveone/scandiweb-test",
+  "authors": [
+    {
+      "name": "konrad",
+      "email": "konrad.gruca90@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "public/"
+    }
+  },
+  "require": {
+    "altorouter/altorouter": "^2.0"
+  }
+}

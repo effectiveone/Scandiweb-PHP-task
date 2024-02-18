@@ -1,0 +1,34 @@
+button,
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-weight: 400;
+  font-size: $font-sm;
+  color: $white;
+  background-color: $primary;
+  border: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 300ms ease-in;
+  @include breakpoint-down(small) {
+    padding: 0.25rem 0.75rem;
+  }
+
+  &:hover {
+    background-color: $secondary;
+  }
+
+  &.btn-cancel {
+    background-color: $light-gray;
+    color: $primary;
+    &:hover {
+      background-color: $white;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
