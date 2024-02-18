@@ -11,7 +11,10 @@ This repository contains a web application developed using PHP, MySQL, Reactjs, 
 
 Check out the demo video to get a quick overview of the project:
 
-[![Watch the Demo](Assets/screen.png)](Assets/show.mp4)
+
+
+https://github.com/effectiveone/Scandiweb-PHP-task/assets/85121335/f158fd14-e870-4c71-96d6-c19b106062fc
+
 
 _Note: Click on the image to watch the demo._
 
