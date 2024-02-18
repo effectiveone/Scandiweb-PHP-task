@@ -1,14 +1,22 @@
 import PropTypes from 'prop-types';
 
+function renderOptions(list) {
+  return list.map((item) => (
+    <option key={item.id || item} value={item.id || item}>
+      {item.name || item}
+    </option>
+  ));
+}
+
 function FormRowSelect({
-  name,
-  labelText,
-  placeholder,
-  id,
   defaultValue = '',
+  id,
+  labelText,
   list = [],
-  required = false,
+  name,
   onChange,
+  placeholder,
+  required = false,
 }) {
   return (
     <div className="form-row">
@@ -25,13 +33,7 @@ function FormRowSelect({
         required={required}
       >
         {placeholder && <option disabled>{placeholder}</option>}
-        {list.map((item) => {
-          return (
-            <option key={item.id || item} value={item.id || item}>
-              {item.name || item}
-            </option>
-          );
-        })}
+        {renderOptions(list)}
       </select>
     </div>
   );

@@ -1,8 +1,5 @@
 <?php
 
-$router->get('/', function () {
-    echo "Witaj na stronie głównej!";
-});
 
 $router->get('/api/v1/products', ['controller' => 'ProductsController']);
 $router->post('/api/v1/products', ['controller' => 'ProductsController', 'action' => 'store']);
