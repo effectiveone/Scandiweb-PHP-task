@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { apiHandler } from './apiHandler';
+import { apiHandler } from './apiHandler.js';
 
 function useProductForm() {
   const navigate = useNavigate();

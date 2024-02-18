@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { HeaderComponent, SingleProduct } from '../components';
-import { useProductLogic } from '../utils/useProduct';
+import { useProductLogic } from '../utils/useProduct.js';
 
 function Products() {
   const navigate = useNavigate();

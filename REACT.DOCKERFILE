@@ -1,12 +1,14 @@
 FROM node:alpine
 
-WORKDIR "/React"
+WORKDIR /React
 
-COPY ./React/package.json ./
+COPY ./React/package.json ./React/yarn.lock ./
 
-RUN yarn install
+# Install dependencies
+RUN yarn install --frozen-lockfile
 
 COPY ./React/ .
 
+EXPOSE 3000
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { fetchProducts, deleteProducts } from '../app/productsSlice';
+import { fetchProducts, deleteProducts } from '../app/productsSlice.jsx';
 
 export function useProductLogic() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export function useProductLogic() {
       .then(() => {
         setCheckedProducts([]);
         dispatch(fetchProducts());
-        alert('Products deleted successfully.');
+        toast.success('Products deleted successfully.');
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message);

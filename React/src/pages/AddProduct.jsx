@@ -1,5 +1,5 @@
 import { HeaderComponent, FormRow, FormRowSelect } from '../components';
-import useProductForm from '../utils/useProductForm';
+import useProductForm from '../utils/useProductForm.js';
 
 function AddProduct() {
   const {

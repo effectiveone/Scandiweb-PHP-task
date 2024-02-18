@@ -27,6 +27,7 @@ export const deleteProducts = createAsyncThunk(
     await apiHandler.delete('/products', {
       params: { productIds: productIds.join() },
     });
+    dispatch(fetchProducts());
     return productIds;
   }
 );

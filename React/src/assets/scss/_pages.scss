@@ -91,13 +91,3 @@
     }
   }
 }
-
-.Toastify .Toastify__toast--error {
-  .Toastify__toast-icon svg {
-    fill: $secondary;
-  }
-
-  .Toastify__progress-bar {
-    background-color: $secondary;
-  }
-}
